@@ -1,8 +1,9 @@
 # ZOO APP
 Spring Boot backend for login, REST and CRUD
 
-Import postgres database from the database folder
-DB contains an administrator and a guest account
+Import postgres database from the database folder.<br>
+DB contains an administrator and a guest account.
+
 Username/password:
-adminTest/adminTest
-Guest123456/Guest123456
+- adminTest/adminTest
+- Guest123456/Guest123456
