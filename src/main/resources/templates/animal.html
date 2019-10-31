@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <style>
+        table {
+          font-family: arial, sans-serif;
+          border-collapse: collapse;
+          width: 100%;
+        }
+
+        td, th {
+          border: 1px solid #dddddd;
+          text-align: left;
+          padding: 8px;
+        }
+
+        tr:nth-child(even) {
+          background-color: #dddddd;
+        }
+    </style>
+    <title>Zoo App</title>
+</head>
+<body>
+<h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Sign Out"/>
+</form>
+<br>
+
+<div sec:authorize="hasAuthority('Administrator')">
+    <form th:action="@{/animal/edit}" method="get">
+        <input type="submit" value="Add new animal"/>
+    </form>
+</div>
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Habitat</th>
+        <th>Description</th>
+        <th sec:authorize="hasAuthority('Administrator')">Administration</th>
+    </tr>
+    <tr th:each="animal: ${animals}">
+        <td th:text="${animal.id}" />
+        <td th:text="${animal.name}" />
+        <td th:text="${animal.type.name}" />
+        <td th:text="${animal.habitat}" />
+        <td th:text="${animal.description}" />
+        <td sec:authorize="hasAuthority('Administrator')">
+            <form th:action="@{'/animal/' + ${animal.id}}" th:method="put">
+                <input type="submit" value="Edit"/>
+            </form>
+            <form th:action="@{'/animal/' + ${animal.id}}" th:method="delete">
+                <input type="submit" value="Delete"/>
+            </form>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>
